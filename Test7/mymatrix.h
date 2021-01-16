@@ -24,6 +24,7 @@ class matrix {
 		则编译器按错误处理。*/
 		int columns() const { return theColumns; }
 		T& operator()(int i, int j)const;
+		matrix<T> transpose()const;
 		matrix<T>& operator=(const matrix<T>&) const;
 		matrix<T> operator+(const matrix<T>&) const;
 		matrix<T> operator+() const;
@@ -42,14 +43,15 @@ ostream& operator<<(ostream& out, const matrix<T>& m) {
 	int rows = m.theRows;
 	int columns = m.theColumns;
 	int k = 0;
-	out << "[" << " ";
+	out << "[";
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++) {
-			out<<m.element[k++]<<" ";
+			if(i==0&&j==0) out<<" "<<m.element[k++]<<" ";
+			else out << " "<<" " << m.element[k++] << " ";
 		}
 		out << endl;
 	}
-	out <<" "<< "]" << endl;
+	out << " " << "]" << endl;
 	return out;
 }
 template<class T>
@@ -76,12 +78,28 @@ matrix<T>& matrix<T>::operator=(const matrix<T>& m) const {
 	//赋值操作 *this
 	if (this != &m) {
 		delete[] element;
-		theRows = m.Rows;
-		theColumns = m.Columns;
+		theRows = m.theRows;
+		theColumns = m.theColumns;
 		element = new T[theRows*theColumns];
 		copy(m.element,m.element+theRows*theColumns,element);
 	}
 	return *this;
+}
+
+template<class T>
+matrix<T> matrix<T>::transpose() const {
+	int m=theRows;
+	int n = theColumns;
+	matrix<T> w(n, m);
+	int k = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			w.element[k++] = element[i + j*theColumns];
+		}
+	}
+	
+	return w;
+	
 }
 
 template<class T>
@@ -100,7 +118,7 @@ matrix<T> matrix<T>::operator+(const matrix<T>& m) const
 		throw "matrixsize Mismatch";
 	matrix<T> w(theRows, theColumns);
 	for (int i = 0; i < theRows * theColumns;i++)
-		w.element[i] = element[i] + m.element;
+		w.element[i] = element[i] + m.element[i];
 	return w;
 }
 
@@ -136,21 +154,21 @@ matrix<T> matrix<T>::operator-() const {
 template<class T>
 matrix<T> matrix<T>::operator*(const matrix<T>& m) const
 {
-	if (theColumns != m.theColumns)
+	if (theColumns != m.theRows)
 		throw "matrixszie mismatch";
 	matrix<T> w(theRows,m.theColumns);
 	//initialize 1-1
 	//A[i][k]*B[k][j]
 	//ct是第i行的第一个元素 
 	//cm是第j列的第一个元素 
-	int ct = 0, cm = 0, cw = 0;
+	int ct = 0, cm = 0, cw = 0; 
 	for (int i = 1; i <= theRows; i++)
 	{
 		for (int j = 1; j <= m.theColumns; j++) {
 			T sum = element[ct] * m.element[cm];
 			for (int k = 2; k <=theColumns; k++) {
 				ct++;
-				cm += m.columns;
+				cm += m.theColumns;
 				sum += element[ct] * m.element[cm];
 			}
 			w.element[cw++] = sum;

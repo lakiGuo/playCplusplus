@@ -17,3 +17,14 @@ void bubble(T a[],int n) {
     }
 
 }
+
+template<class T>
+void selection_sort(T a[],int n) {
+    for (int i = 1; i < n; i++) {
+        for (int j = i; j >0; j--) {
+            if (a[j] < a[j - 1]) {
+                swap<T>(a[j], a[j - 1]);
+            }
+        }
+    }
+}
