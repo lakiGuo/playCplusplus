@@ -8,7 +8,7 @@ using namespace std;
 
 //重点：操作符的重载
 //用什么定义matrix
-//回答引用和指正的区别
+//回答引用和指针的区别
 //私有类，公共类，友元函数
 //作用域操作符 '::' 
 template<class T>
