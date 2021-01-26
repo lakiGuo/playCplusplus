@@ -1,11 +1,11 @@
 
-#ifndef QUEUE_H
-#define QUEUE_H
+#ifndef MY_QUEUE_H
+#define MY_QUEUE_H
+using namespace std;
 template<class T>
-class queque
-{
+class my_queque{
 	public:
-		virtual ~queque(){}
+		virtual ~my_queque(){}
 		virtual bool empty() const=0;
 		virtual int size() const=0;
 		virtual T& front()=0;

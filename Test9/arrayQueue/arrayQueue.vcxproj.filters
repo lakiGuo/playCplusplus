@@ -23,7 +23,7 @@
     <ClInclude Include="arrayQueue.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="queue.h">
+    <ClInclude Include="my_queue.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

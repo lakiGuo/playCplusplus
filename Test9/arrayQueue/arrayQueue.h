@@ -2,17 +2,19 @@
 #ifndef ARRAYQUEUE_H
 #define ARRAYQUEUE_H
 
-#include "queue.h"
+#include "my_queue.h"
 #include <sstream>
 
 using namespace std;
 
 template<class T>
-class arrayQueue :public queue<T>
-{
+class arrayQueue : virtual public my_queque<T>{
+	template<class T> friend ostream& operator<<(ostream&, const arrayQueue<T>&);
+	
 	public:
 		arrayQueue(int initialCapacity = 10);
-		~arrayQueue() {delete []queue};
+		~arrayQueue() { delete[]queue; }
+		void input(int add_number);
 		bool empty() const { return theFront == theBack; }
 		int size() const { return (theBack - theFront + arrayLength) % arrayLength; }
 		T& front() { if (theFront == theBack) throw "queue is empty";
@@ -34,11 +36,34 @@ class arrayQueue :public queue<T>
 		int arrayLength;
 		T* queue;
 };
+
+template<class T>
+ostream& operator<<(ostream& out , const arrayQueue<T>& q) {
+	out << "[" << " ";
+	int start = (q.theFront + 1) % q.arrayLength;
+	for (int i=0; i < q.size(); i++) {
+		int k = (start + i) % q.arrayLength;
+		out << q.queue[k]<<" ";
+	}
+	out << "]";
+	return out;
+}
+
+template<class T>
+void arrayQueue<T>::input(int input_number) {
+	if (input_number <= 0)
+		throw exception("input number must be > 0");
+	int temp;
+	for (int i = 0; i < input_number; i++) {
+		cin >> temp;
+		push(temp);
+	}
+}
 template<class T>
 arrayQueue<T>::arrayQueue(int initialCapacity){
 	if (initialCapacity < 1) {
 		ostringstream s;
-		s << "Initial capacity = " << intialCapacity << "Must be > 0";
+		s << "Initial capacity = " << initialCapacity << "Must be > 0";
 		throw "Capacity must be > 0";
 	}
 	arrayLength = initialCapacity;

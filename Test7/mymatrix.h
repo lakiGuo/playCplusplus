@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef MYMATRIX_H
 #define MYMATRIX_H
 #include <iostream>
