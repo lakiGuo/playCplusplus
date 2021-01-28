@@ -7,10 +7,13 @@
 
 using namespace std;
 
+
+
 template<class T>
 class arrayQueue : virtual public my_queque<T>{
-	template<class T> friend ostream& operator<<(ostream&, const arrayQueue<T>&);
 	
+	template<class T> friend ostream& operator<<(ostream&, const arrayQueue<T>&);
+   
 	public:
 		arrayQueue(int initialCapacity = 10);
 		~arrayQueue() { delete[]queue; }
@@ -30,12 +33,14 @@ class arrayQueue : virtual public my_queque<T>{
 			queue[theFront].~T();
 		}
 		void push(const T& theElement);
+	
 	private:
 		int theFront;
 		int theBack;
 		int arrayLength;
 		T* queue;
 };
+
 
 template<class T>
 ostream& operator<<(ostream& out , const arrayQueue<T>& q) {
@@ -91,4 +96,8 @@ void arrayQueue<T>::push(const T& theElement){
 	theBack = (theBack + 1) % arrayLength;
 	queue[theBack] = theElement;
 }
+
+
+
+
 #endif
