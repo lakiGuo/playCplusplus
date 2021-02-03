@@ -149,6 +149,11 @@
   <ItemGroup>
     <ClCompile Include="List_test.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="chain.h" />
+    <ClInclude Include="chainNode.h" />
+    <ClInclude Include="linearList.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

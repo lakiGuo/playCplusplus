@@ -3,11 +3,16 @@
 
 #include <iostream>
 #include <list>
+#include "chain.h"
 using namespace std;
 int main()
 {
     //使用list模拟链表
-    
+    chain<int> onelist;
+    onelist.insert(0,1);
+    onelist.insert(1,4);
+    std::cout << onelist;
+    cout << endl;
     list<int> a;
     list<int> b;
     a.push_back(1);
