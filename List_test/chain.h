@@ -7,7 +7,7 @@ using namespace std;
 template<class T >
 //virtual public linearList<T>
 //next指针初始化赋值为空
-class chain {
+class chain  {
 	public:
 		chain(int initialCapacity=10);
 		chain(const chain<T>&);
@@ -15,8 +15,8 @@ class chain {
 		bool empty() const { return listSize == 0; }
 		int size() const { return listSize; }
 		 T& get(int theIndex);
-		//int indexOf(const T& theElement) const;
-		//void erase(int theIndex);
+		int indexOf(const T& theElement) const;
+		void erase(int theIndex);
 		bool insert(int theIndex,const T& theElement);
 		//void output(ostream& out)const;
 		void output(ostream& out)const;
@@ -77,7 +77,7 @@ T& chain<T>::get(int theIndex) {
 template<class T>
 bool chain<T>::insert(int theIndex, const T& theElement) {
 
-	if (theIndex < listSize - 1) {
+	if (theIndex < 0 || theIndex > listSize) {
 		ostringstream s;
 		s << "listSize is: " << listSize << "Index is invalid";
 		throw exception("illegal");
@@ -104,6 +104,51 @@ bool chain<T>::insert(int theIndex, const T& theElement) {
 	return true;
 }
 
+template<class T>
+int chain<T>::indexOf(const T& theElement) const {
+	chainNode<T>* ptr = firstNode;
+	if (firstNode == NULL) {
+		return -1;
+	}
+	int index = 0;
+	for (; ptr!=NULL&& ptr->element != theElement; ptr = ptr->next) {
+		index++;
+	}
+	if (ptr == NULL) {
+		return -1;
+	}
+	else {
+		return index;
+	}
+}
+
+template<class T>
+void chain<T>::erase(int theIndex) {
+	if (firstNode == NULL) {
+		throw exception("illegal");
+	}
+	if (theIndex<0 || theIndex>listSize - 1) {
+		throw exception("index illegal");
+	}
+	chainNode<T>* targetNode;
+	chainNode <T> * ptr = firstNode;
+	if (theIndex == 0) {
+		firstNode = ptr->next;
+		delete ptr;
+	}
+	else{
+		int count = 0;
+		for (; count != theIndex - 1; count++) {
+			ptr = ptr->next;
+		}
+		targetNode = ptr->next;
+		ptr->next = targetNode->next;
+		delete targetNode;
+	}
+	
+	
+
+}
 template<class T>
 void chain<T>::output(ostream& out) const {
 	for (chainNode<T>* currentNode = firstNode; currentNode != NULL; currentNode = currentNode->next) {

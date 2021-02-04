@@ -10,9 +10,13 @@ int main()
     //使用list模拟链表
     chain<int> onelist;
     onelist.insert(0,1);
+    cout << onelist.size()<<endl;
+    onelist.insert(0, 2);
     onelist.insert(1,4);
-    std::cout << onelist;
-    cout << endl;
+    onelist.erase(0);
+    std::cout << onelist << endl;
+    cout << "element in index 0 is: "<<onelist.get(0)<<endl;
+    cout << "index of element 2 is: "<<onelist.indexOf(2) << endl;
     list<int> a;
     list<int> b;
     a.push_back(1);
